@@ -1,9 +1,9 @@
 package acceptance.toy1;
 
-import acceptance.toy1.bjs.BjsTestProject;
 import acceptance.toy1.bjs.UserOfToyComponent1;
 import acceptance.toy1.components.ToyComponent1;
 import acceptance.toy1.components.ToyComponent2;
+import bionic.js.BjsProject;
 import jjbridge.engine.v8.V8Engine;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ public class ToyComponent1Test
     @BeforeAll
     public static void beforeClass()
     {
-        BjsTestProject.setJsEngine(new V8Engine());
+        BjsProject.setJsEngine(new V8Engine());
     }
 
     @Test

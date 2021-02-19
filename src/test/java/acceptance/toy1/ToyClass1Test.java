@@ -1,8 +1,8 @@
 package acceptance.toy1;
 
-import acceptance.toy1.bjs.BjsTestProject;
 import acceptance.toy1.bjs.ToyClass1;
 import bionic.js.BjsAnyObject;
+import bionic.js.BjsProject;
 import bionic.js.Lambda;
 import jjbridge.api.value.JSType;
 import jjbridge.engine.v8.V8Engine;
@@ -24,7 +24,7 @@ public class ToyClass1Test
     @BeforeAll
     public static void beforeClass()
     {
-        BjsTestProject.setJsEngine(new V8Engine());
+        BjsProject.setJsEngine(new V8Engine());
     }
 
     @BeforeEach
