@@ -11,7 +11,7 @@
 
     <name>Bionic JS</name>
     <description>The library to integrate Bionic JS in Java applications</description>
-    <url>https://github.com/Forge-Srl/bionic-js</url>
+    <url>https://github.com/Forge-Srl/bionic-js-runtime-java</url>
 
     <licenses>
         <license>
@@ -88,9 +88,9 @@
     </profiles>
 
     <scm>
-        <connection>scm:git:git@github.com:forge-srl/bionic-js.git</connection>
-        <developerConnection>scm:git:git@github.com:forge-srl/bionic-js.git</developerConnection>
-        <url>https://github.com/Forge-Srl/bionic-js/tree/main</url>
+        <connection>scm:git:git@github.com:forge-srl/bionic-js-runtime-java.git</connection>
+        <developerConnection>scm:git:git@github.com:forge-srl/bionic-js-runtime-java.git</developerConnection>
+        <url>https://github.com/Forge-Srl/bionic-js-runtime-java/tree/main</url>
         <tag>HEAD</tag>
     </scm>
 
