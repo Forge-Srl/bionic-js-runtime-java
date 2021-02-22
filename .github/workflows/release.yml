@@ -1,0 +1,57 @@
+name: Release bionic.js Java
+
+on:
+  push:
+    tags:
+      - 'release/**'
+
+jobs:
+  release_current_version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configure GPG Key
+        run: |
+          export GPG_TTY=$(tty)
+          mkdir -p ~/.gnupg/
+          echo "$GPG_SIGNING_KEY" > ~/.gnupg/private.asc
+          gpg --batch --import ~/.gnupg/private.asc
+        env:
+          GPG_SIGNING_KEY: ${{ secrets.GPG_KEY_FORGE_SRL_OPENSOURCE }}
+      - name: Set up Java 1.8 for publishing to GitHub Packages
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+      - name: Cache Maven packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Set up Java 1.8 for publishing to Maven Central
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+          server-id: ossrh
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+      - name: Release on Maven Central
+        env:
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE_FORGE_SRL_OPENSOURCE }}
+        run: mvn -B deploy --file pom.xml -Drelease-repo=maven-central
+
+      - name: Set up Java 1.8 for publishing to GitHub Package Registry
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+      - name: Release on GitHub Package Registry
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE_FORGE_SRL_OPENSOURCE }}
+        run: mvn -B deploy --file pom.xml -Drelease-repo=github
