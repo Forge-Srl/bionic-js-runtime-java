@@ -37,7 +37,9 @@ jobs:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE_FORGE_SRL_OPENSOURCE }}
-        run: mvn -B deploy --file pom.xml -Drelease-repo=maven-central
+        run: |
+          export GPG_TTY=$(tty)
+          mvn -B deploy --file pom.xml -Drelease-repo=maven-central
 
       - name: Set up Java 1.8 for publishing to GitHub Package Registry
         uses: actions/setup-java@v1
@@ -49,4 +51,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE_FORGE_SRL_OPENSOURCE }}
-        run: mvn -B deploy --file pom.xml -Drelease-repo=github
+        run: |
+          export GPG_TTY=$(tty)
+          mvn -B deploy --file pom.xml -Drelease-repo=github

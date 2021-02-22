@@ -1,4 +1,4 @@
-name: Build bionic.js Java
+name: Build bionic.js Java runtime
 
 on:
   push:
