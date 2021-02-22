@@ -21,6 +21,7 @@ jobs:
           mkdir -p ~/.gnupg/
           echo "$GPG_SIGNING_KEY" > ~/.gnupg/private.asc
           gpg --batch --import ~/.gnupg/private.asc
+          cat ~/.gnupg/gpg.conf
         env:
           GPG_SIGNING_KEY: ${{ secrets.GPG_KEY_FORGE_SRL_OPENSOURCE }}
       - name: Set up JDK 1.8
