@@ -28,6 +28,7 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Build and test
+        shell: 'script -q -e -c "bash {0}"'
         run: |
           export GPG_TTY="$(tty)"
           echo $GPG_TTY
