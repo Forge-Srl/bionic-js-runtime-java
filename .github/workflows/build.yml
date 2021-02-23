@@ -29,6 +29,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Build and test
         run: |
+          rm -rf ~/.m2
           export GPG_TTY=$(tty)
           mvn -B verify --file pom.xml
         env:
