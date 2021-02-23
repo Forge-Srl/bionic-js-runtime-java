@@ -1,4 +1,4 @@
-name: Build bionic.js Java runtime
+name: Build bionic.js Java
 
 on:
   push:
@@ -20,13 +20,13 @@ jobs:
         with:
           java-version: 1.8
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
-          gpg-private-key: ${{ secrets.GPG_KEY_FORGE_SRL_OPENSOURCE }}
-      - name: Cache Maven packages
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
+      #    gpg-private-key: ${{ secrets.GPG_KEY_FORGE_SRL_OPENSOURCE }}
+      #- name: Cache Maven packages
+      #  uses: actions/cache@v2
+      #  with:
+      #    path: ~/.m2
+      #    key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+      #    restore-keys: ${{ runner.os }}-m2
       - name: Build and test
         run: |
           export GPG_TTY=$(tty)
