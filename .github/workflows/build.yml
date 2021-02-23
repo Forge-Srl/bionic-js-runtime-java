@@ -15,22 +15,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
-      - name: Cache Maven packages
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
           gpg-private-key: ${{ secrets.GPG_KEY_FORGE_SRL_OPENSOURCE }}
+      #- name: Cache Maven packages
+      #  uses: actions/cache@v2
+      #  with:
+      #    path: ~/.m2
+      #    key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+      #    restore-keys: ${{ runner.os }}-m2
       - name: Build and test
         run: |
-          rm -rf ~/.m2
           export GPG_TTY=$(tty)
           mvn -B verify --file pom.xml
         env:
