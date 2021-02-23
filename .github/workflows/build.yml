@@ -20,7 +20,7 @@ jobs:
         with:
           java-version: 1.8
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
-      #    gpg-private-key: ${{ secrets.GPG_KEY_FORGE_SRL_OPENSOURCE }}
+          gpg-private-key: ${{ secrets.GPG_KEY_FORGE_SRL_OPENSOURCE }}
       #- name: Cache Maven packages
       #  uses: actions/cache@v2
       #  with:
