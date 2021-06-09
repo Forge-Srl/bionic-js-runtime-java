@@ -18,9 +18,14 @@ import jjbridge.api.value.JSType;
 import jjbridge.api.value.strategy.FunctionCallback;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.NavigableMap;
+import java.util.TreeMap;
 
 /**
  * The environment which provides JavaScript objects get/put and module loading capabilities.
@@ -31,7 +36,8 @@ public class Bjs
     private static final String BJS_NATIVE_OBJ_FIELD_NAME = "bjsNativeObj";
     private static final String BJS_WRAPPER_OBJ_FIELD_NAME = "bjsWrapperObj";
     private static final String UNBOUND = "unbound";
-    private static final Map<String, Bjs> projects = new HashMap<>();
+    private static final NavigableMap<String[], Bjs> projects = new TreeMap<>(Comparator.comparing((String[] o) -> o[0])
+            .thenComparing(o -> o[1]));
 
     private static JSRuntime defaultRuntime;
 
@@ -46,33 +52,48 @@ public class Bjs
         defaultRuntime = runtime;
     }
 
-    static synchronized Bjs get(String packageName, @NonNull String projectName)
+    static synchronized Bjs get(@NonNull String packageName, @NonNull String projectName)
     {
-        String fullClassName = packageName == null || packageName.isEmpty()
-                ? "Bjs" + projectName
-                : packageName + ".Bjs" + projectName;
-
-        if (projects.containsKey(fullClassName))
+        Map.Entry<String[], Bjs> bjsEntry = projects.floorEntry(new String[]{packageName, projectName});
+        if (bjsEntry != null
+                && packageName.startsWith(bjsEntry.getKey()[0])
+                && projectName.equals(bjsEntry.getKey()[1]))
         {
-            return projects.get(fullClassName);
+            return bjsEntry.getValue();
         }
-        else
+
+        List<String> packParts = Arrays.asList(packageName.split("\\."));
+        StringBuilder packageBuilder = new StringBuilder(packageName.length());
+        for (int i = packParts.size(); i > 0; i--)
         {
-            Bjs bjs = new Bjs(projectName);
+            packageBuilder.setLength(0);
+            for (int j = 0; j < i; j++)
+            {
+                packageBuilder.append(packParts.get(j));
+                if (j < i - 1)
+                {
+                    packageBuilder.append('.');
+                }
+            }
+            String superPackageName = packageBuilder.toString();
+
             try
             {
-                Class<?> initializerClass = Class.forName(fullClassName);
+                Class<?> initializerClass = Class.forName(superPackageName + ".Bjs" + projectName);
                 Class<? extends BjsProject> projectClass = initializerClass.asSubclass(BjsProject.class);
+                Bjs bjs = new Bjs(projectName);
                 BjsProjectTypeInfo.get(projectClass).initialize(bjs);
-            }
-            catch (ClassNotFoundException e)
-            {
-                throw new RuntimeException(e);
-            }
 
-            projects.put(fullClassName, bjs);
-            return bjs;
+                projects.put(new String[]{superPackageName, projectName}, bjs);
+                return bjs;
+            }
+            catch (ClassNotFoundException ignored)
+            {
+                // Ignore.
+            }
         }
+
+        throw new RuntimeException("Cannot find Bjs" + projectName + " from package " + packageName);
     }
 
     private Bjs(@NonNull String projectName)

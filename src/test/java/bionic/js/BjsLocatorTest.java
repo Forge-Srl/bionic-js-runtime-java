@@ -10,15 +10,14 @@ public class BjsLocatorTest extends TestWithBjsMock
     @Test
     public void ctor()
     {
-        BjsLocator locator = new BjsLocator();
-        assertEquals("", locator.packageName);
-        assertEquals("", locator.projectName);
-        assertEquals("", locator.moduleName);
-
-        locator = new BjsLocator("package", "project", "module");
+        BjsLocator locator = new BjsLocator("package", "project", "module");
         assertEquals("package", locator.packageName);
         assertEquals("project", locator.projectName);
         assertEquals("module", locator.moduleName);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            new BjsLocator("", "project", "module");
+        });
     }
 
     @Test

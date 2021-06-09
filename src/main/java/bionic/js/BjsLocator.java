@@ -13,13 +13,12 @@ public final class BjsLocator
     final String moduleName;
     final String packageName;
 
-    BjsLocator()
+    BjsLocator(@NonNull String packageName, @NonNull String projectName, @NonNull String moduleName)
     {
-        this("", "", "");
-    }
-
-    BjsLocator(String packageName, @NonNull String projectName, @NonNull String moduleName)
-    {
+        if (packageName.isEmpty())
+        {
+            throw new IllegalArgumentException("Package name cannot be empty");
+        }
         this.packageName = packageName;
         this.projectName = projectName;
         this.moduleName = moduleName;

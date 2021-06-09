@@ -1,5 +1,7 @@
-package acceptance.toy1.bjs;
+package acceptance.toy1;
 
+import acceptance.toy1.bjs.ToyComponent1BjsExport;
+import acceptance.toy1.bjs.ToyComponent2BjsExport;
 import bionic.js.Bjs;
 import bionic.js.BjsProject;
 import bionic.js.BjsProjectTypeInfo;
