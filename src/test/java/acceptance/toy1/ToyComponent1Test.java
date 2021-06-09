@@ -50,11 +50,14 @@ public class ToyComponent1Test
 
     @Test
     public void interactingWithSubclass3() {
-        assertEquals(0, UserOfToyComponent1.getSum(new ToyComponent1("0", "0"), new ToyComponent1("0", "0")));
-        assertEquals(3, UserOfToyComponent1.getSum(new ToyComponent2("0", "0"), new ToyComponent1("0", "0")));
-        assertEquals(3, UserOfToyComponent1.getSum2(new ToyComponent2("0", "0"), new ToyComponent1("0", "0")));
-        assertEquals(0, UserOfToyComponent1.getSum(new ToyComponent1("0", "0"), new ToyComponent2("0", "0")));
-        assertEquals(4, UserOfToyComponent1.getSum(new ToyComponent2("0", "0"), new ToyComponent2("0", "0")));
-        assertEquals(4, UserOfToyComponent1.getSum2(new ToyComponent2("0", "0"), new ToyComponent2("0", "0")));
+        ToyComponent1 toy1 = new ToyComponent1("0", "0");
+        ToyComponent2 toy2 = new ToyComponent2("0", "0");
+
+        assertEquals(0, UserOfToyComponent1.getSum(toy1, toy1));
+        assertEquals(3, UserOfToyComponent1.getSum(toy2, toy1));
+        assertEquals(3, UserOfToyComponent1.getSum2(toy2, toy1));
+        assertEquals(0, UserOfToyComponent1.getSum(toy1, toy2));
+        assertEquals(4, UserOfToyComponent1.getSum(toy2, toy2));
+        assertEquals(4, UserOfToyComponent1.getSum2(toy2, toy2));
     }
 }

@@ -469,16 +469,19 @@ public class Bjs
         {
             return null;
         }
-        else
+
+        if (jsNative.getActualType() != JSType.Object)
         {
-            JSReference nativeRef = ((JSObject<?>) context.resolve(jsNative)).get(NATIVE_HIDDEN_FIELD);
-            if (isNullOrUndefined(nativeRef))
-            {
-                return null;
-            }
-            JSExternal<T> resolve = context.resolve(nativeRef);
-            return resolve.getValue();
+            return null;
         }
+
+        JSReference nativeRef = ((JSObject<?>) context.resolve(jsNative)).get(NATIVE_HIDDEN_FIELD);
+        if (isNullOrUndefined(nativeRef))
+        {
+            return null;
+        }
+        JSExternal<T> resolve = context.resolve(nativeRef);
+        return resolve.getValue();
     }
 
     /**

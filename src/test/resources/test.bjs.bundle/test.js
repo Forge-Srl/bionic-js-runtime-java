@@ -246,6 +246,8 @@ moduleLoaders.set('ToyComponent2', () => {
             return bjsNative
         }
 
+        // @bionic (String, String)
+
         // @bionic () => Int
         additionalMethod() {
             return this.constructor.bjsNative.bjs_additionalMethod(this)
