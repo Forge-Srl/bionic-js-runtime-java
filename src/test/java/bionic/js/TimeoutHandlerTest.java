@@ -19,20 +19,6 @@ public class TimeoutHandlerTest {
     }
 
     @Test
-    public void timeoutId_lifecycle() {
-        for (int i = 0; i < 100; i++) {
-            assertFalse(timeoutHandler.exists(startingId + 1 + i));
-            assertEquals(startingId + 1 + i, timeoutHandler.newTimeoutId());
-            assertTrue(timeoutHandler.exists(startingId + 1 + i));
-
-            if (i % 2 == 0) {
-                timeoutHandler.remove(startingId + 1 + i);
-                assertFalse(timeoutHandler.exists(startingId + 1 + i));
-            }
-        }
-    }
-
-    @Test
     public void runDelayed_singleInvocation() throws InterruptedException {
         int[] value = new int[1];
 
@@ -90,6 +76,71 @@ public class TimeoutHandlerTest {
         }).when(function).invoke(null);
 
         int id = timeoutHandler.runDelayed(function, null, 500);
+
+        assertEquals(0, value[0]);
+        assertTrue(timeoutHandler.exists(id));
+        Thread.sleep(100);
+        assertEquals(0, value[0]);
+        assertTrue(timeoutHandler.exists(id));
+        Thread.sleep(100);
+        assertEquals(0, value[0]);
+        assertTrue(timeoutHandler.exists(id));
+        Thread.sleep(100);
+        assertEquals(0, value[0]);
+        assertTrue(timeoutHandler.exists(id));
+        Thread.sleep(100);
+        assertEquals(0, value[0]);
+        assertTrue(timeoutHandler.exists(id));
+        timeoutHandler.remove(id);
+        assertFalse(timeoutHandler.exists(id));
+        Thread.sleep(300);
+        assertEquals(0, value[0]);
+        assertFalse(timeoutHandler.exists(id));
+    }
+
+    @Test
+    public void runAtFixedRate_singleInvocation() throws InterruptedException {
+        int[] value = {0};
+
+        JSFunction<?> function = mock(JSFunction.class);
+        doAnswer(invocation -> {
+            value[0] += 2;
+            return null;
+        }).when(function).invoke(null);
+
+        int id = timeoutHandler.runAtFixedRate(function, null, 500);
+
+        assertEquals(0, value[0]);
+        assertTrue(timeoutHandler.exists(id));
+        Thread.sleep(750);
+        assertEquals(2, value[0]);
+        assertTrue(timeoutHandler.exists(id));
+        Thread.sleep(500);
+        assertEquals(4, value[0]);
+        assertTrue(timeoutHandler.exists(id));
+        Thread.sleep(500);
+        assertEquals(6, value[0]);
+        assertTrue(timeoutHandler.exists(id));
+
+        timeoutHandler.remove(id);
+        assertEquals(6, value[0]);
+        assertFalse(timeoutHandler.exists(id));
+        Thread.sleep(500);
+        assertEquals(6, value[0]);
+        assertFalse(timeoutHandler.exists(id));
+    }
+
+    @Test
+    public void runAtFixedRate_remove() throws InterruptedException {
+        int[] value = new int[] {0};
+
+        JSFunction<?> function = mock(JSFunction.class);
+        doAnswer(invocation -> {
+            value[0] = 999;
+            return null;
+        }).when(function).invoke(null);
+
+        int id = timeoutHandler.runAtFixedRate(function, null, 500);
 
         assertEquals(0, value[0]);
         assertTrue(timeoutHandler.exists(id));

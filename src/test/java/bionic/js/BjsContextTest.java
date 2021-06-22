@@ -45,15 +45,17 @@ public class BjsContextTest {
     public void before() {
         runtime = new JSRuntimeForTest(null, null, null, null);
         FunctionCallback<?>[] callbacks = prepareForAssertGlobalSetting(runtime, new String[]{
-                "setTimeout","clearTimeout","bjsNativeRequire","bjsSetModuleLoader"
+                "setTimeout","clearTimeout","setInterval","clearInterval","bjsNativeRequire","bjsSetModuleLoader"
         });
 
         context = new BjsContext(runtime, "SomeProject");
 
         assertEquals(context.setTimeoutCallback, callbacks[0]);
         assertEquals(context.clearTimeoutCallback, callbacks[1]);
-        assertEquals(context.bjsNativeRequireCallback, callbacks[2]);
-        assertEquals(context.bjsSetModuleLoaderCallback, callbacks[3]);
+        assertEquals(context.setIntervalCallback, callbacks[2]);
+        assertEquals(context.clearIntervalCallback, callbacks[3]);
+        assertEquals(context.bjsNativeRequireCallback, callbacks[4]);
+        assertEquals(context.bjsSetModuleLoaderCallback, callbacks[5]);
         runtime.referenceBuilder = null;
         runtime.globalObject = null;
         runtime.resolver = null;

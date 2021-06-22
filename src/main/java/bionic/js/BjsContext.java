@@ -42,6 +42,21 @@ class BjsContext
         return createJsUndefined();
     };
 
+    protected final FunctionCallback<JSReference> setIntervalCallback = jsReferences ->
+    {
+        JSFunction<?> function = resolve(jsReferences[0]);
+        int delay = ((JSInteger) resolve(jsReferences[1])).getValue();
+        int timeoutId = timeoutHandler.runAtFixedRate(function, jsReferences[0], delay);
+        return newInteger(timeoutId);
+    };
+
+    protected final FunctionCallback<JSReference> clearIntervalCallback = jsReferences ->
+    {
+        int id = ((JSInteger) resolve(jsReferences[0])).getValue();
+        timeoutHandler.remove(id);
+        return createJsUndefined();
+    };
+
     protected final FunctionCallback<JSReference> bjsNativeRequireCallback = jsReferences ->
     {
         String moduleName = ((JSString) resolve(jsReferences[0])).getValue();
@@ -69,6 +84,8 @@ class BjsContext
 
         defineGlobalFunction(runtime, "setTimeout", setTimeoutCallback);
         defineGlobalFunction(runtime, "clearTimeout", clearTimeoutCallback);
+        defineGlobalFunction(runtime, "setInterval", setIntervalCallback);
+        defineGlobalFunction(runtime, "clearInterval", clearIntervalCallback);
         defineGlobalFunction(runtime, "bjsNativeRequire", bjsNativeRequireCallback);
         defineGlobalFunction(runtime, "bjsSetModuleLoader", bjsSetModuleLoaderCallback);
 
