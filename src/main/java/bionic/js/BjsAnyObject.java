@@ -11,7 +11,7 @@ public class BjsAnyObject
 {
     public JSReference jsObj;
 
-    BjsAnyObject(JSReference jsObj)
+    public BjsAnyObject(JSReference jsObj)
     {
         this.jsObj = jsObj;
     }
