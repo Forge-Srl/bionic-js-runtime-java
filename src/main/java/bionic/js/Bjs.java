@@ -295,6 +295,7 @@ public class Bjs
      * {@link #putWrapped(BjsExport, Class)}</p>
      *
      * @param nativeObject the object to store
+     * @param <T> the type of the object to store
      * @return a reference to the JavaScript value
      * */
     public <T> JSReference putNative(T nativeObject)
@@ -318,6 +319,8 @@ public class Bjs
      *
      * @param nativeObject the object to store
      * @param nativeWrapperClass the class instance of the associated native wrapper
+     * @param <T> the type of the object to store
+     * @param <B> the type of the associated native wrapper
      * @return a reference to the JavaScript value
      * */
     public <B extends BjsNativeWrapper<T>, T extends BjsExport> JSReference putWrapped(T nativeObject,
@@ -359,6 +362,7 @@ public class Bjs
      *
      * @param nativeFunc the value of the reference
      * @param jsFuncCallback the function implementation
+     * @param <F> the type of the function
      * @return a reference to the JavaScript value
      * */
     public <F extends Lambda.Function> JSReference putFunc(F nativeFunc, FunctionCallback<?> jsFuncCallback)
@@ -371,6 +375,7 @@ public class Bjs
      *
      * @param nativeArray the value of the reference
      * @param converter the strategy to create a reference for each array item
+     * @param <T> the type of the items of the array
      * @return a reference to the JavaScript value
      * */
     public <T> JSReference putArray(T[] nativeArray, NativeConverter<T> converter)
@@ -460,6 +465,7 @@ public class Bjs
      * Extract the Java object from a reference to a JavaScript value.
      *
      * @param jsNative the reference to the JavaScript value
+     * @param <T> the type of the extracted object
      * @return the referenced Java object
      * */
     @CheckForNull
@@ -488,6 +494,7 @@ public class Bjs
      * Extract the Java object from a reference to a JavaScript native interface value.
      *
      * @param jsWrappedObject the reference to the JavaScript native wrapper
+     * @param <T> the type of the extracted object
      * @return the referenced Java object
      * */
     @CheckForNull
@@ -512,6 +519,7 @@ public class Bjs
      *
      * @param jsObject the reference to the JavaScript value
      * @param nativeFunc the function implementation
+     * @param <F> the type of the function
      * @return the referenced function
      * */
     @CheckForNull
@@ -537,6 +545,7 @@ public class Bjs
      * @param jsObject the reference to the JavaScript object
      * @param converter the strategy to convert the JavaScript reference to the desired value
      * @param clazz the class instance of the returning type
+     * @param <T> the type of the extracted object
      * @return the referenced Java object
      * */
     @CheckForNull
@@ -566,6 +575,7 @@ public class Bjs
      * @param jsArray the reference to the JavaScript value
      * @param elementConverter the strategy to convert the JavaScript array items
      * @param nativeClass the class instance of the returning type
+     * @param <T> the type of the items of the array
      * @return the referenced value
      * */
     @CheckForNull
@@ -594,6 +604,7 @@ public class Bjs
      *
      * @param jsObject the reference to the Javascript object
      * @param nativeClass the class instance of the result
+     * @param <T> the type of the extracted object
      * @return the exported Java object if available, or {@code null} otherwise
      * */
     @CheckForNull
@@ -618,6 +629,7 @@ public class Bjs
      *
      * @param nativeObject the native object to bind
      * @param wrapper the JavaScript object reference
+     * @param <T> the type of the native object
      * */
     public <T extends BjsExport> void bindNative(T nativeObject, JSReference wrapper)
     {

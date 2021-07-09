@@ -43,6 +43,8 @@ public final class BjsNativeWrapperTypeInfo<B extends BjsNativeWrapper<?>> exten
      * Provides the native wrapper type info for the given class.
      *
      * @param clazz the class to get information about
+     * @param <T> the type of the native wrapper
+     * @param <N> the type of the wrapped objects
      * @return the information object
      * */
     public static <N extends BjsExport, T extends BjsNativeWrapper<N>> BjsNativeWrapperTypeInfo<T> get(

@@ -23,6 +23,7 @@ public final class BjsObjectTypeInfo<B extends BjsObject> extends BjsTypeInfo<B>
      * Provides the object type info for the given class.
      *
      * @param clazz the class to get information about
+     * @param <T> the type to get information about
      * @return the information object
      * */
     public static <T extends BjsObject> BjsObjectTypeInfo<T> get(@NonNull Class<T> clazz)
