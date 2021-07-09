@@ -18,12 +18,13 @@ import jjbridge.api.value.strategy.FunctionCallback;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executors;
 
 class BjsContext
 {
     private final JSRuntime runtime;
     private final String projectName;
-    private final TimeoutHandler timeoutHandler = new TimeoutHandler(0);
+    private final TimeoutHandler timeoutHandler = new TimeoutHandler(0, Executors.newScheduledThreadPool(1));
     private final Map<String, BjsNativeWrapperTypeInfo<?>> nativeWrappers = new HashMap<>();
     private JSReference moduleLoader;
 

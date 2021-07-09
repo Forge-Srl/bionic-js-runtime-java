@@ -4,7 +4,6 @@ import jjbridge.api.runtime.JSReference;
 import jjbridge.api.value.JSFunction;
 
 import java.util.HashMap;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -16,9 +15,9 @@ final class TimeoutHandler
     private final HashMap<Integer, ScheduledFuture<?>> handlers;
     private final AtomicInteger lastTimeoutId;
 
-    TimeoutHandler(int startingId)
+    TimeoutHandler(int startingId, ScheduledExecutorService scheduler)
     {
-        this.scheduler = Executors.newScheduledThreadPool(1);
+        this.scheduler = scheduler;
         this.handlers = new HashMap<>();
         this.lastTimeoutId = new AtomicInteger(startingId);
     }
