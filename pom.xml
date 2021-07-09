@@ -4,7 +4,7 @@
 
     <groupId>srl.forge</groupId>
     <artifactId>bionic-js</artifactId>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.2.0</version>
     <packaging>jar</packaging>
 
     <name>Bionic JS</name>
@@ -145,7 +145,7 @@
         <connection>scm:git:git@github.com:forge-srl/bionic-js-runtime-java.git</connection>
         <developerConnection>scm:git:git@github.com:forge-srl/bionic-js-runtime-java.git</developerConnection>
         <url>https://github.com/Forge-Srl/bionic-js-runtime-java/tree/main</url>
-        <tag>HEAD</tag>
+        <tag>release/0.2.0</tag>
     </scm>
 
     <properties>
