@@ -13,7 +13,6 @@ Add this to your pom.xml:
 <dependency>
   <groupId>srl.forge</groupId>
   <artifactId>bionic-js</artifactId>
-  <version>0.2.0</version>
 </dependency>
 ```
 
