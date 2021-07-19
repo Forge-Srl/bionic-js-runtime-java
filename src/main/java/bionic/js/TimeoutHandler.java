@@ -7,32 +7,32 @@ import java.util.HashMap;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 final class TimeoutHandler
 {
     private final ScheduledExecutorService scheduler;
-    private final HashMap<Integer, ScheduledFuture<?>> handlers;
-    private final AtomicInteger lastTimeoutId;
+    private final HashMap<Long, ScheduledFuture<?>> handlers;
+    private final AtomicLong lastTimeoutId;
 
-    TimeoutHandler(int startingId, ScheduledExecutorService scheduler)
+    TimeoutHandler(long startingId, ScheduledExecutorService scheduler)
     {
         this.scheduler = scheduler;
         this.handlers = new HashMap<>();
-        this.lastTimeoutId = new AtomicInteger(startingId);
+        this.lastTimeoutId = new AtomicLong(startingId);
     }
 
-    int newTimeoutId()
+    long newTimeoutId()
     {
         return lastTimeoutId.incrementAndGet();
     }
 
-    boolean exists(int timeoutId)
+    boolean exists(long timeoutId)
     {
         return handlers.containsKey(timeoutId);
     }
 
-    void remove(int timeoutId)
+    void remove(long timeoutId)
     {
         ScheduledFuture<?> handler = handlers.remove(timeoutId);
         if (handler == null)
@@ -42,9 +42,9 @@ final class TimeoutHandler
         handler.cancel(false);
     }
 
-    int runDelayed(JSFunction<?> function, JSReference functionReference, int delay)
+    long runDelayed(JSFunction<?> function, JSReference functionReference, long delay)
     {
-        int timeoutId = newTimeoutId();
+        long timeoutId = newTimeoutId();
         ScheduledFuture<?> handler = scheduler.schedule(() ->
         {
             function.invoke(functionReference);
@@ -54,9 +54,9 @@ final class TimeoutHandler
         return timeoutId;
     }
 
-    int runAtFixedRate(JSFunction<?> function, JSReference functionReference, int delay)
+    long runAtFixedRate(JSFunction<?> function, JSReference functionReference, long delay)
     {
-        int timeoutId = newTimeoutId();
+        long timeoutId = newTimeoutId();
         ScheduledFuture<?> handler = scheduler.scheduleAtFixedRate(() ->
                 function.invoke(functionReference), delay, delay, TimeUnit.MILLISECONDS);
         handlers.put(timeoutId, handler);

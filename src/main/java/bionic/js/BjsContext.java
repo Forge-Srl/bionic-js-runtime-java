@@ -5,8 +5,8 @@ import jjbridge.api.runtime.JSReference;
 import jjbridge.api.runtime.JSRuntime;
 import jjbridge.api.value.JSBoolean;
 import jjbridge.api.value.JSDate;
-import jjbridge.api.value.JSDouble;
 import jjbridge.api.value.JSExternal;
+import jjbridge.api.value.JSFloat;
 import jjbridge.api.value.JSFunction;
 import jjbridge.api.value.JSInteger;
 import jjbridge.api.value.JSObject;
@@ -31,14 +31,14 @@ class BjsContext
     protected final FunctionCallback<JSReference> setTimeoutCallback = jsReferences ->
     {
         JSFunction<?> function = resolve(jsReferences[0]);
-        int delay = ((JSInteger) resolve(jsReferences[1])).getValue();
-        int timeoutId = timeoutHandler.runDelayed(function, jsReferences[0], delay);
+        long delay = ((JSInteger) resolve(jsReferences[1])).getValue();
+        long timeoutId = timeoutHandler.runDelayed(function, jsReferences[0], delay);
         return newInteger(timeoutId);
     };
 
     protected final FunctionCallback<JSReference> clearTimeoutCallback = jsReferences ->
     {
-        int id = ((JSInteger) resolve(jsReferences[0])).getValue();
+        long id = ((JSInteger) resolve(jsReferences[0])).getValue();
         timeoutHandler.remove(id);
         return createJsUndefined();
     };
@@ -46,14 +46,14 @@ class BjsContext
     protected final FunctionCallback<JSReference> setIntervalCallback = jsReferences ->
     {
         JSFunction<?> function = resolve(jsReferences[0]);
-        int delay = ((JSInteger) resolve(jsReferences[1])).getValue();
-        int timeoutId = timeoutHandler.runAtFixedRate(function, jsReferences[0], delay);
+        long delay = ((JSInteger) resolve(jsReferences[1])).getValue();
+        long timeoutId = timeoutHandler.runAtFixedRate(function, jsReferences[0], delay);
         return newInteger(timeoutId);
     };
 
     protected final FunctionCallback<JSReference> clearIntervalCallback = jsReferences ->
     {
-        int id = ((JSInteger) resolve(jsReferences[0])).getValue();
+        long id = ((JSInteger) resolve(jsReferences[0])).getValue();
         timeoutHandler.remove(id);
         return createJsUndefined();
     };
@@ -153,7 +153,7 @@ class BjsContext
         return reference;
     }
 
-    JSReference newInteger(int value)
+    JSReference newInteger(long value)
     {
         JSReference reference = runtime.newReference(JSType.Integer);
         ((JSInteger) resolve(reference)).setValue(value);
@@ -162,8 +162,8 @@ class BjsContext
 
     JSReference newDouble(double value)
     {
-        JSReference reference = runtime.newReference(JSType.Double);
-        ((JSDouble) resolve(reference)).setValue(value);
+        JSReference reference = runtime.newReference(JSType.Float);
+        ((JSFloat) resolve(reference)).setValue(value);
         return reference;
     }
 

@@ -12,14 +12,14 @@ public interface ToyComponent1BjsExport extends BjsExport
 {
     Bjs bjs = BjsNativeWrapperTypeInfo.get(Wrapper.class).bjsLocator.get();
 
-    Integer number1();
-    void number1(Integer value);
+    Long number1();
+    void number1(Long value);
 
-    Integer number2();
-    void number2(Integer value);
+    Long number2();
+    void number2(Long value);
 
-    Integer getSum(Integer offset);
-    Integer getToySum(ToyComponent1BjsExport toyComponent1);
+    Long getSum(Long offset);
+    Long getToySum(ToyComponent1BjsExport toyComponent1);
 
     @BjsTypeInfo.BjsLocation(project = "TestProject", module = "ToyComponent1")
     class Wrapper<T extends ToyComponent1BjsExport> extends BjsNativeWrapper<T>
@@ -77,9 +77,9 @@ public interface ToyComponent1BjsExport extends BjsExport
 
         protected FunctionCallback<?> bjsStatic_sum() {
             return jsReferences -> {
-                Integer result = invokeStatic("sum",
-                        new Class[]{Integer.class, Integer.class},
-                        new Object[]{bjs.getInteger(jsReferences[0]), bjs.getInteger(jsReferences[0])});
+                Long result = invokeStatic("sum",
+                        new Class[]{Long.class, Long.class},
+                        new Object[]{bjs.getLong(jsReferences[0]), bjs.getLong(jsReferences[0])});
                 return bjs.putPrimitive(result);
             };
         }
@@ -89,7 +89,7 @@ public interface ToyComponent1BjsExport extends BjsExport
         }
         protected FunctionCallback<?> bjsSet_number1() {
             return jsReferences -> {
-                ((ToyComponent1BjsExport) bjs.getWrapped(jsReferences[0])).number1(bjs.getInteger(jsReferences[1]));
+                ((ToyComponent1BjsExport) bjs.getWrapped(jsReferences[0])).number1(bjs.getLong(jsReferences[1]));
                 return bjs.jsUndefined();
             };
         }
@@ -99,13 +99,13 @@ public interface ToyComponent1BjsExport extends BjsExport
         }
         protected FunctionCallback<?> bjsSet_number2() {
             return jsReferences -> {
-                ((ToyComponent1BjsExport) bjs.getWrapped(jsReferences[0])).number2(bjs.getInteger(jsReferences[1]));
+                ((ToyComponent1BjsExport) bjs.getWrapped(jsReferences[0])).number2(bjs.getLong(jsReferences[1]));
                 return bjs.jsUndefined();
             };
         }
 
         protected FunctionCallback<?> bjs_getSum() {
-            return jsReferences -> bjs.putPrimitive(((ToyComponent1BjsExport) bjs.getWrapped(jsReferences[0])).getSum(bjs.getInteger(jsReferences[1])));
+            return jsReferences -> bjs.putPrimitive(((ToyComponent1BjsExport) bjs.getWrapped(jsReferences[0])).getSum(bjs.getLong(jsReferences[1])));
         }
 
         protected FunctionCallback<?> bjs_getToySum() {

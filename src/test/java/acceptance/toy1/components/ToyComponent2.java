@@ -16,20 +16,20 @@ public class ToyComponent2 extends ToyComponent1 implements ToyComponent2BjsExpo
     }
 
     @Override
-    public Integer getSum(Integer offset)
+    public Long getSum(Long offset)
     {
         return super.getSum(offset) * 2;
     }
 
     @Override
-    public Integer getToySum(ToyComponent1BjsExport toyComponent1)
+    public Long getToySum(ToyComponent1BjsExport toyComponent1)
     {
-        return getSum(1) + toyComponent1.getSum(1);
+        return getSum(1L) + toyComponent1.getSum(1L);
     }
 
     @Override
-    public Integer additionalMethod()
+    public Long additionalMethod()
     {
-        return 69420;
+        return 69420L;
     }
 }

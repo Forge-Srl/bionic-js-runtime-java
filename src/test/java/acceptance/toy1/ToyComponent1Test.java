@@ -21,7 +21,7 @@ public class ToyComponent1Test
     @Test
     public void testWrapped_getSum() {
         ToyComponent1 wrapped = new ToyComponent1("1", "2");
-        assertEquals(6, wrapped.getSum(3));
+        assertEquals(6, wrapped.getSum(3L));
     }
 
     @Test

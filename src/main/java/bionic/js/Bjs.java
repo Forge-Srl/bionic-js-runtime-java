@@ -8,8 +8,8 @@ import jjbridge.api.runtime.JSRuntime;
 import jjbridge.api.value.JSArray;
 import jjbridge.api.value.JSBoolean;
 import jjbridge.api.value.JSDate;
-import jjbridge.api.value.JSDouble;
 import jjbridge.api.value.JSExternal;
+import jjbridge.api.value.JSFloat;
 import jjbridge.api.value.JSFunction;
 import jjbridge.api.value.JSInteger;
 import jjbridge.api.value.JSObject;
@@ -251,7 +251,7 @@ public class Bjs
      * @param primitive the value of the reference
      * @return a reference to the JavaScript value
      * */
-    public JSReference putPrimitive(Integer primitive)
+    public JSReference putPrimitive(Long primitive)
     {
         return primitive == null ? jsNull() : context.newInteger(primitive);
     }
@@ -409,13 +409,13 @@ public class Bjs
     }
 
     /**
-     * Extract the Integer value from a reference to a JavaScript value.
+     * Extract the Long value from a reference to a JavaScript value.
      *
      * @param jsInteger the reference to the JavaScript value
      * @return the referenced value
      * */
     @CheckForNull
-    public Integer getInteger(JSReference jsInteger)
+    public Long getLong(JSReference jsInteger)
     {
         return isNullOrUndefined(jsInteger) ? null : ((JSInteger) context.resolve(jsInteger)).getValue();
     }
@@ -429,7 +429,7 @@ public class Bjs
     @CheckForNull
     public Double getDouble(JSReference jsDouble)
     {
-        return isNullOrUndefined(jsDouble) ? null : ((JSDouble) context.resolve(jsDouble)).getValue();
+        return isNullOrUndefined(jsDouble) ? null : ((JSFloat) context.resolve(jsDouble)).getValue();
     }
 
     /**

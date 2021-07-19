@@ -37,7 +37,7 @@ public class TimeoutHandlerTest {
         }).when(function).invoke(null);
 
         Runnable[] task = mockSchedule(1000);
-        int id = timeoutHandler.runDelayed(function, null, 1000);
+        long id = timeoutHandler.runDelayed(function, null, 1000);
 
         assertNotEquals(2, value[0]);
         assertTrue(timeoutHandler.exists(id));
@@ -88,7 +88,7 @@ public class TimeoutHandlerTest {
         }).when(function).invoke(null);
 
         Runnable[] task = mockSchedule(500);
-        int id = timeoutHandler.runDelayed(function, null, 500);
+        long id = timeoutHandler.runDelayed(function, null, 500);
 
         assertEquals(0, value[0]);
         assertTrue(timeoutHandler.exists(id));
@@ -108,7 +108,7 @@ public class TimeoutHandlerTest {
         }).when(function).invoke(null);
 
         Runnable[] task = mockScheduleAtFixedRate(500);
-        int id = timeoutHandler.runAtFixedRate(function, null, 500);
+        long id = timeoutHandler.runAtFixedRate(function, null, 500);
 
         assertEquals(0, value[0]);
         assertTrue(timeoutHandler.exists(id));
@@ -139,7 +139,7 @@ public class TimeoutHandlerTest {
         }).when(function).invoke(null);
 
         Runnable[] task = mockScheduleAtFixedRate(500);
-        int id = timeoutHandler.runAtFixedRate(function, null, 500);
+        long id = timeoutHandler.runAtFixedRate(function, null, 500);
 
         assertEquals(0, value[0]);
         assertTrue(timeoutHandler.exists(id));

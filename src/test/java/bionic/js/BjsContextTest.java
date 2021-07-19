@@ -135,8 +135,8 @@ public class BjsContextTest {
     @Test
     public void newInteger() {
         JSReference reference = newPrimitiveCommonAssert(JSType.Integer, JSInteger.class, invocation -> {
-            Integer value = invocation.getArgument(0);
-            assertEquals(15964, (int) value);
+            Long value = invocation.getArgument(0);
+            assertEquals(15964, value);
             return null;
         });
         assertEquals(reference, context.newInteger(15964));
@@ -144,7 +144,7 @@ public class BjsContextTest {
 
     @Test
     public void newDouble() {
-        JSReference reference = newPrimitiveCommonAssert(JSType.Double, JSDouble.class, invocation -> {
+        JSReference reference = newPrimitiveCommonAssert(JSType.Float, JSFloat.class, invocation -> {
             Double value = invocation.getArgument(0);
             assertEquals(173.666e12, value, 0);
             return null;

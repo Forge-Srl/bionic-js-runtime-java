@@ -156,8 +156,8 @@ public class ToyClass1 extends BjsObject
         bjs.call(bjsClass, "voidFunc");
     }
 
-    public static void paramsFunc_static(Boolean bool, Date date, Double number, Integer integer, String string,
-                                         BjsAnyObject any, ToyClass1 bjsObj, Integer[] array, Lambda.F0<String> lambda) {
+    public static void paramsFunc_static(Boolean bool, Date date, Double number, Long integer, String string,
+                                         BjsAnyObject any, ToyClass1 bjsObj, Long[] array, Lambda.F0<String> lambda) {
         bjs.call(bjsClass, "paramsFunc", bjs.putPrimitive(bool), bjs.putPrimitive(date),
                 bjs.putPrimitive(number), bjs.putPrimitive(integer), bjs.putPrimitive(string),
                 any.jsObj, bjs.putObj(bjsObj), bjs.putArray(array, bjs::putPrimitive),
@@ -176,8 +176,8 @@ public class ToyClass1 extends BjsObject
         return bjs.getDouble(bjs.call(bjsClass, "retValueFunc"));
     }
 
-    public static Integer intFunc_static() {
-        return bjs.getInteger(bjs.call(bjsClass, "retValueFunc"));
+    public static Long intFunc_static() {
+        return bjs.getLong(bjs.call(bjsClass, "retValueFunc"));
     }
 
     public static String stringFunc_static() {
@@ -195,16 +195,16 @@ public class ToyClass1 extends BjsObject
         });
     }
 
-    public static void lambdaWithParamsFunc_static(Lambda.F4<Integer, String, BjsAnyObject, ToyClass1, String> lambda) {
+    public static void lambdaWithParamsFunc_static(Lambda.F4<Long, String, BjsAnyObject, ToyClass1, String> lambda) {
         bjs.call(bjsClass, "lambdaWithParamsFunc", bjs.putFunc(lambda, jsReferences ->
                 bjs.putPrimitive(lambda.apply(
-                        bjs.getInteger(jsReferences[0]),
+                        bjs.getLong(jsReferences[0]),
                         bjs.getString(jsReferences[1]),
                         bjs.getAny(jsReferences[2]),
                         bjs.getObj(jsReferences[3], bjsFactory, ToyClass1.class)))));
     }
 
-    public static Lambda.F4<Integer, BjsAnyObject, ToyClass1, Integer[], String> returningLambdaWithParamsFunc_static() {
+    public static Lambda.F4<Long, BjsAnyObject, ToyClass1, Long[], String> returningLambdaWithParamsFunc_static() {
         JSReference jsFunc = bjs.call(bjsClass, "returningLambdaWithParamsFunc");
 
         return bjs.getFunc(jsFunc, (integer, any, toyClass1, array) ->

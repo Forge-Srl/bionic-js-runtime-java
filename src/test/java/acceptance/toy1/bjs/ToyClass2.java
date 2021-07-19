@@ -155,8 +155,8 @@ public class ToyClass2 extends ToyClass1
         bjsCall("voidFunc");
     }
 
-    public void paramsFunc(Boolean bool, Date date, Double number, Integer integer, String string,
-                                  BjsAnyObject any, ToyClass2 bjsObj, Integer[] array, Lambda.F0<String> lambda) {
+    public void paramsFunc(Boolean bool, Date date, Double number, Long integer, String string,
+                                  BjsAnyObject any, ToyClass2 bjsObj, Long[] array, Lambda.F0<String> lambda) {
         bjsCall("paramsFunc", bjs.putPrimitive(bool), bjs.putPrimitive(date),
                 bjs.putPrimitive(number), bjs.putPrimitive(integer), bjs.putPrimitive(string),
                 any.jsObj, bjs.putObj(bjsObj), bjs.putArray(array, bjs::putPrimitive),
@@ -175,8 +175,8 @@ public class ToyClass2 extends ToyClass1
         return bjs.getDouble(bjsCall("retValueFunc"));
     }
 
-    public Integer intFunc() {
-        return bjs.getInteger(bjsCall("retValueFunc"));
+    public Long intFunc() {
+        return bjs.getLong(bjsCall("retValueFunc"));
     }
 
     public String stringFunc() {
@@ -194,16 +194,16 @@ public class ToyClass2 extends ToyClass1
         });
     }
 
-    public void lambdaWithParamsFunc(Lambda.F4<Integer, String, BjsAnyObject, ToyClass2, String> lambda) {
+    public void lambdaWithParamsFunc(Lambda.F4<Long, String, BjsAnyObject, ToyClass2, String> lambda) {
         bjsCall("lambdaWithParamsFunc", bjs.putFunc(lambda, jsReferences ->
                 bjs.putPrimitive(lambda.apply(
-                        bjs.getInteger(jsReferences[0]),
+                        bjs.getLong(jsReferences[0]),
                         bjs.getString(jsReferences[1]),
                         bjs.getAny(jsReferences[2]),
                         bjs.getObj(jsReferences[3], bjsFactory, ToyClass2.class)))));
     }
 
-    public Lambda.F4<Integer, BjsAnyObject, ToyClass2, Integer[], String> returningLambdaWithParamsFunc() {
+    public Lambda.F4<Long, BjsAnyObject, ToyClass2, Long[], String> returningLambdaWithParamsFunc() {
         JSReference jsFunc = bjsCall("returningLambdaWithParamsFunc");
 
         return bjs.getFunc(jsFunc, (integer, any, toyClass1, array) ->

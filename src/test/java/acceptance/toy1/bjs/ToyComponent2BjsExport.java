@@ -10,7 +10,7 @@ public interface ToyComponent2BjsExport extends ToyComponent1BjsExport
 {
     Bjs bjs = BjsNativeWrapperTypeInfo.get(Wrapper.class).bjsLocator.get();
 
-    Integer additionalMethod();
+    Long additionalMethod();
 
     @BjsTypeInfo.BjsLocation(project = "TestProject", module = "ToyComponent2")
     class Wrapper<T extends ToyComponent2BjsExport> extends ToyComponent1BjsExport.Wrapper<T>

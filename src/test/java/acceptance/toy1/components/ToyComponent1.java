@@ -12,7 +12,7 @@ public class ToyComponent1 implements ToyComponent1BjsExport
         return Math.PI;
     }
 
-    public static Integer sum(Integer number1, Integer number2) {
+    public static Long sum(Long number1, Long number2) {
         return number1 + number2;
     }
 
@@ -23,38 +23,38 @@ public class ToyComponent1 implements ToyComponent1BjsExport
     }
 
     @Override
-    public Integer number1()
+    public Long number1()
     {
-        return Integer.parseInt(number1);
+        return Long.parseLong(number1);
     }
 
     @Override
-    public void number1(Integer value)
+    public void number1(Long value)
     {
         number1 = value.toString();
     }
 
     @Override
-    public Integer number2()
+    public Long number2()
     {
-        return Integer.parseInt(number2);
+        return Long.parseLong(number2);
     }
 
     @Override
-    public void number2(Integer value)
+    public void number2(Long value)
     {
         number2 = value.toString();
     }
 
     @Override
-    public Integer getSum(Integer offset)
+    public Long getSum(Long offset)
     {
         return offset + number1() + number2();
     }
 
     @Override
-    public Integer getToySum(ToyComponent1BjsExport toyComponent1)
+    public Long getToySum(ToyComponent1BjsExport toyComponent1)
     {
-        return getSum(0) + toyComponent1.getSum(0);
+        return getSum(0L) + toyComponent1.getSum(0L);
     }
 }

@@ -184,8 +184,8 @@ public class ToyClass1Test
 
     @Test
     public void testParamsFunc() {
-        ToyClass1.paramsFunc_static(true, testDate, 01.984, 1984, "1984", new BjsAnyObject(bjsObj), bjsObj,
-                new Integer[]{1,2,3}, () -> "lambda return value");
+        ToyClass1.paramsFunc_static(true, testDate, 01.984, 1984L, "1984", new BjsAnyObject(bjsObj), bjsObj,
+                new Long[]{1L,2L,3L}, () -> "lambda return value");
         assertEquals("called paramsFunc with params: true, 1984-12-26T00:00:00.000Z, 1.984, 1984, 1984, any object, any object, [1,2,3], lambda return value", ToyClass1.log_static());
     }
 
@@ -289,7 +289,7 @@ public class ToyClass1Test
     public void testLambdaWithParamsFunc() {
         ToyClass1.lambdaWithParamsFunc_static((integer, nullStr, any, obj) -> {
             assertEquals("called lambdaWithParamsFunc", ToyClass1.log_static());
-            assertEquals(1984, (int) integer);
+            assertEquals(1984, integer);
             assertNull(nullStr);
             assertEquals("hello 84", any.getObject(ToyClass1.bjsFactory, ToyClass1.class).log());
             assertEquals("hello 84", obj.log());
@@ -300,16 +300,16 @@ public class ToyClass1Test
 
     @Test
     public void testReturningLambdaWithParamsFunc() {
-        Lambda.F4<Integer, BjsAnyObject, ToyClass1, Integer[], String> lambda = ToyClass1.returningLambdaWithParamsFunc_static();
+        Lambda.F4<Long, BjsAnyObject, ToyClass1, Long[], String> lambda = ToyClass1.returningLambdaWithParamsFunc_static();
         assertEquals("called returningLambdaWithParamsFunc", ToyClass1.log_static());
-        String lambdaRetValue = lambda.apply(1984, new BjsAnyObject(bjsObj), bjsObj, new Integer[]{1,2,3});
+        String lambdaRetValue = lambda.apply(1984L, new BjsAnyObject(bjsObj), bjsObj, new Long[]{1L,2L,3L});
         assertEquals("called returned lambda with params: 1984, any object, any object, [1,2,3]", ToyClass1.log_static());
         assertEquals("lambda returning value", lambdaRetValue);
     }
 
     @Test
     public void testReturningLambdaWithParamsFunc_null() {
-        Lambda.F4<Integer, BjsAnyObject, ToyClass1, Integer[], String> lambda = ToyClass1.returningLambdaWithParamsFunc_static();
+        Lambda.F4<Long, BjsAnyObject, ToyClass1, Long[], String> lambda = ToyClass1.returningLambdaWithParamsFunc_static();
         assertEquals("called returningLambdaWithParamsFunc", ToyClass1.log_static());
         String lambdaRetValue = lambda.apply(null, ToyClass1.bjs.anyNull(), null, null);
         assertEquals("called returned lambda with params: null, null, null, null", ToyClass1.log_static());
