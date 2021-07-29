@@ -4,19 +4,19 @@ import edu.umd.cs.findbugs.annotations.CheckForNull;
 import edu.umd.cs.findbugs.annotations.NonNull;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystemNotFoundException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 class BjsBundle
 {
@@ -48,7 +48,6 @@ class BjsBundle
     String loadFile(@NonNull String requirePath)
     {
         String filePath = getFullPathName(requirePath);
-        Charset charset = StandardCharsets.UTF_8;
 
         List<String> lines = null;
         try
@@ -60,7 +59,17 @@ class BjsBundle
                 throw new FileNotFoundException(filePath);
             }
 
-            lines = Files.readAllLines(Paths.get(resource.toURI()), charset);
+            URI uri = resource.toURI();
+            if (!uri.getScheme().equals("file"))
+            {
+                throw new FileNotFoundException(filePath);
+            }
+
+            File file = new File(uri);
+            try (FileInputStream stream = new FileInputStream(file))
+            {
+                lines = streamToStrings(stream);
+            }
         }
         catch (IOException | URISyntaxException | FileSystemNotFoundException e1)
         {
@@ -72,11 +81,7 @@ class BjsBundle
                     throw new FileNotFoundException(filePath);
                 }
 
-                InputStreamReader in = new InputStreamReader(fileStream, charset);
-                BufferedReader reader = new BufferedReader(in);
-                lines = reader.lines().collect(Collectors.toList());
-                reader.close();
-                in.close();
+                lines = streamToStrings(fileStream);
             }
             catch (IOException e2)
             {
@@ -85,5 +90,20 @@ class BjsBundle
         }
 
         return lines == null ? null : String.join("\n", lines);
+    }
+
+    private static List<String> streamToStrings(InputStream stream) throws IOException
+    {
+        try (InputStreamReader in = new InputStreamReader(stream, StandardCharsets.UTF_8);
+             BufferedReader reader = new BufferedReader(in))
+        {
+            String line;
+            List<String> lines = new ArrayList<>();
+            while ((line = reader.readLine()) != null)
+            {
+                lines.add(line);
+            }
+            return lines;
+        }
     }
 }
