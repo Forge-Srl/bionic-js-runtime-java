@@ -73,7 +73,11 @@ public final class BjsNativeWrapperTypeInfo<B extends BjsNativeWrapper<?>> exten
                     {
                         return (BjsNativeExports) m.invoke(null, nativeExport);
                     }
-                    catch (IllegalAccessException | InvocationTargetException e)
+                    catch (InvocationTargetException e)
+                    {
+                        throw new RuntimeException(e.getCause());
+                    }
+                    catch (IllegalAccessException e)
                     {
                         throw new RuntimeException(e);
                     }
@@ -95,7 +99,11 @@ public final class BjsNativeWrapperTypeInfo<B extends BjsNativeWrapper<?>> exten
                     {
                         m.invoke(null, nativeExport);
                     }
-                    catch (IllegalAccessException | InvocationTargetException e)
+                    catch (InvocationTargetException e)
+                    {
+                        throw new RuntimeException(e.getCause());
+                    }
+                    catch (IllegalAccessException e)
                     {
                         throw new RuntimeException(e);
                     }

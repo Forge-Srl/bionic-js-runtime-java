@@ -55,7 +55,11 @@ public final class BjsProjectTypeInfo<B extends BjsProject> extends TypeInfo<B>
                     {
                         m.invoke(null, bjs);
                     }
-                    catch (IllegalAccessException | InvocationTargetException e)
+                    catch (InvocationTargetException e)
+                    {
+                        throw new RuntimeException(e.getCause());
+                    }
+                    catch (IllegalAccessException e)
                     {
                         throw new RuntimeException(e);
                     }

@@ -41,7 +41,11 @@ public abstract class BjsNativeWrapper<T extends BjsExport>
             R invoke = (R) method.invoke(realImplementation, args);
             return invoke;
         }
-        catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e)
+        catch (InvocationTargetException e)
+        {
+            throw new RuntimeException(e.getCause());
+        }
+        catch (NoSuchMethodException | IllegalAccessException e)
         {
             throw new RuntimeException(e);
         }
@@ -54,7 +58,11 @@ public abstract class BjsNativeWrapper<T extends BjsExport>
             Constructor<? extends T> constructor = realImplementation.getConstructor(types);
             return constructor.newInstance(args);
         }
-        catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e)
+        catch (InvocationTargetException e)
+        {
+            throw new RuntimeException(e.getCause());
+        }
+        catch (NoSuchMethodException | InstantiationException | IllegalAccessException e)
         {
             throw new RuntimeException(e);
         }
