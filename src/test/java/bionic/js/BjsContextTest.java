@@ -134,7 +134,7 @@ public class BjsContextTest {
 
     @Test
     public void newInteger() {
-        JSReference reference = newPrimitiveCommonAssert(JSType.Integer, JSInteger.class, invocation -> {
+        JSReference reference = newPrimitiveCommonAssert(JSType.Number, JSNumber.class, invocation -> {
             Long value = invocation.getArgument(0);
             assertEquals(15964, value);
             return null;
@@ -144,7 +144,7 @@ public class BjsContextTest {
 
     @Test
     public void newDouble() {
-        JSReference reference = newPrimitiveCommonAssert(JSType.Float, JSFloat.class, invocation -> {
+        JSReference reference = newPrimitiveCommonAssert(JSType.Number, JSNumber.class, invocation -> {
             Double value = invocation.getArgument(0);
             assertEquals(173.666e12, value, 0);
             return null;
@@ -352,7 +352,7 @@ public class BjsContextTest {
         System.setOut(original);
     }
 
-    private <T extends JSPrimitive<?>> JSReference newPrimitiveCommonAssert(JSType type, Class<T> tClass, Answer setAnswer) {
+    private <T extends JSPrimitive<?>> JSReference newPrimitiveCommonAssert(JSType type, Class<T> tClass, Answer<?> setAnswer) {
         JSReference reference = mock(JSReference.class);
         when(reference.getActualType()).thenReturn(type);
         when(reference.getNominalType()).thenReturn(type);

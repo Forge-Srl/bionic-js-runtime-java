@@ -152,7 +152,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jjbridge.v8.version>0.3.2</jjbridge.v8.version>
+        <jjbridge.v8.version>0.4.0</jjbridge.v8.version>
     </properties>
 
     <build>
@@ -290,13 +290,13 @@
         <dependency>
             <groupId>srl.forge</groupId>
             <artifactId>jjbridge-api</artifactId>
-            <version>0.3.0</version>
+            <version>0.4.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.spotbugs</groupId>
             <artifactId>spotbugs-annotations</artifactId>
-            <version>4.1.2</version>
+            <version>4.4.0</version>
             <scope>provided</scope>
             <!--
             Setting as optional to bypass LGPL limitations.
@@ -308,31 +308,31 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.7.0</version>
+            <version>5.7.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.7.0</version>
+            <version>5.7.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
-            <version>5.7.0</version>
+            <version>5.7.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
-            <version>3.5.11</version>
+            <version>3.12.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>3.0.0</version>
+            <version>3.12.4</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

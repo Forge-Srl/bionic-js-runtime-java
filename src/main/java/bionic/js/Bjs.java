@@ -9,9 +9,8 @@ import jjbridge.api.value.JSArray;
 import jjbridge.api.value.JSBoolean;
 import jjbridge.api.value.JSDate;
 import jjbridge.api.value.JSExternal;
-import jjbridge.api.value.JSFloat;
 import jjbridge.api.value.JSFunction;
-import jjbridge.api.value.JSInteger;
+import jjbridge.api.value.JSNumber;
 import jjbridge.api.value.JSObject;
 import jjbridge.api.value.JSString;
 import jjbridge.api.value.JSType;
@@ -405,7 +404,7 @@ public class Bjs
     @CheckForNull
     public Boolean getBoolean(JSReference jsBoolean)
     {
-        return isNullOrUndefined(jsBoolean) ? null : ((JSBoolean) context.resolve(jsBoolean)).getValue();
+        return isNullOrUndefined(jsBoolean) ? null : context.<JSBoolean>resolve(jsBoolean).getValue();
     }
 
     /**
@@ -417,7 +416,7 @@ public class Bjs
     @CheckForNull
     public Long getLong(JSReference jsInteger)
     {
-        return isNullOrUndefined(jsInteger) ? null : ((JSInteger) context.resolve(jsInteger)).getValue();
+        return isNullOrUndefined(jsInteger) ? null : context.<JSNumber>resolve(jsInteger).getLongValue();
     }
 
     /**
@@ -429,7 +428,7 @@ public class Bjs
     @CheckForNull
     public Double getDouble(JSReference jsDouble)
     {
-        return isNullOrUndefined(jsDouble) ? null : ((JSFloat) context.resolve(jsDouble)).getValue();
+        return isNullOrUndefined(jsDouble) ? null : context.<JSNumber>resolve(jsDouble).getValue();
     }
 
     /**
@@ -441,7 +440,7 @@ public class Bjs
     @CheckForNull
     public String getString(JSReference jsString)
     {
-        return isNullOrUndefined(jsString) ? null : ((JSString) context.resolve(jsString)).getValue();
+        return isNullOrUndefined(jsString) ? null : context.<JSString>resolve(jsString).getValue();
     }
 
     /**
@@ -453,12 +452,7 @@ public class Bjs
     @CheckForNull
     public Date getDate(JSReference jsDate)
     {
-        if (isNullOrUndefined(jsDate))
-        {
-            return null;
-        }
-        JSDate<?> resolve = context.resolve(jsDate);
-        return resolve.getValue();
+        return isNullOrUndefined(jsDate) ? null : context.<JSDate<?>>resolve(jsDate).getValue();
     }
 
     /**
@@ -481,13 +475,8 @@ public class Bjs
             return null;
         }
 
-        JSReference nativeRef = ((JSObject<?>) context.resolve(jsNative)).get(NATIVE_HIDDEN_FIELD);
-        if (isNullOrUndefined(nativeRef))
-        {
-            return null;
-        }
-        JSExternal<T> resolve = context.resolve(nativeRef);
-        return resolve.getValue();
+        JSReference nativeRef = context.<JSObject<?>>resolve(jsNative).get(NATIVE_HIDDEN_FIELD);
+        return isNullOrUndefined(nativeRef) ? null : context.<JSExternal<T>>resolve(nativeRef).getValue();
     }
 
     /**

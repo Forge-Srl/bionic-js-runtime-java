@@ -6,9 +6,8 @@ import jjbridge.api.runtime.JSRuntime;
 import jjbridge.api.value.JSBoolean;
 import jjbridge.api.value.JSDate;
 import jjbridge.api.value.JSExternal;
-import jjbridge.api.value.JSFloat;
 import jjbridge.api.value.JSFunction;
-import jjbridge.api.value.JSInteger;
+import jjbridge.api.value.JSNumber;
 import jjbridge.api.value.JSObject;
 import jjbridge.api.value.JSString;
 import jjbridge.api.value.JSType;
@@ -31,14 +30,14 @@ class BjsContext
     protected final FunctionCallback<JSReference> setTimeoutCallback = jsReferences ->
     {
         JSFunction<?> function = resolve(jsReferences[0]);
-        long delay = ((JSInteger) resolve(jsReferences[1])).getValue();
+        long delay = this.<JSNumber>resolve(jsReferences[1]).getLongValue();
         long timeoutId = timeoutHandler.runDelayed(function, jsReferences[0], delay);
         return newInteger(timeoutId);
     };
 
     protected final FunctionCallback<JSReference> clearTimeoutCallback = jsReferences ->
     {
-        long id = ((JSInteger) resolve(jsReferences[0])).getValue();
+        long id = this.<JSNumber>resolve(jsReferences[0]).getLongValue();
         timeoutHandler.remove(id);
         return createJsUndefined();
     };
@@ -46,21 +45,21 @@ class BjsContext
     protected final FunctionCallback<JSReference> setIntervalCallback = jsReferences ->
     {
         JSFunction<?> function = resolve(jsReferences[0]);
-        long delay = ((JSInteger) resolve(jsReferences[1])).getValue();
+        long delay = this.<JSNumber>resolve(jsReferences[1]).getLongValue();
         long timeoutId = timeoutHandler.runAtFixedRate(function, jsReferences[0], delay);
         return newInteger(timeoutId);
     };
 
     protected final FunctionCallback<JSReference> clearIntervalCallback = jsReferences ->
     {
-        long id = ((JSInteger) resolve(jsReferences[0])).getValue();
+        long id = this.<JSNumber>resolve(jsReferences[0]).getLongValue();
         timeoutHandler.remove(id);
         return createJsUndefined();
     };
 
     protected final FunctionCallback<JSReference> bjsNativeRequireCallback = jsReferences ->
     {
-        String moduleName = ((JSString) resolve(jsReferences[0])).getValue();
+        String moduleName = this.<JSString>resolve(jsReferences[0]).getValue();
         return getNativeModule(moduleName);
     };
 
@@ -149,28 +148,28 @@ class BjsContext
     JSReference newBoolean(boolean value)
     {
         JSReference reference = runtime.newReference(JSType.Boolean);
-        ((JSBoolean) resolve(reference)).setValue(value);
+        this.<JSBoolean>resolve(reference).setValue(value);
         return reference;
     }
 
     JSReference newInteger(long value)
     {
-        JSReference reference = runtime.newReference(JSType.Integer);
-        ((JSInteger) resolve(reference)).setValue(value);
+        JSReference reference = runtime.newReference(JSType.Number);
+        this.<JSNumber>resolve(reference).setLongValue(value);
         return reference;
     }
 
     JSReference newDouble(double value)
     {
-        JSReference reference = runtime.newReference(JSType.Float);
-        ((JSFloat) resolve(reference)).setValue(value);
+        JSReference reference = runtime.newReference(JSType.Number);
+        this.<JSNumber>resolve(reference).setValue(value);
         return reference;
     }
 
     JSReference newString(String value)
     {
         JSReference reference = runtime.newReference(JSType.String);
-        ((JSString) resolve(reference)).setValue(value);
+        this.<JSString>resolve(reference).setValue(value);
         return reference;
     }
 
